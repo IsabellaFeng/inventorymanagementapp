@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Strawberry Jam",
+        "unit": "bottle",
+        "stock": 100
+    },
+    {
+        "id": 2,
+        "name": "BrownSugar Syrup",
+        "unit": "bottle",
+        "stock": 50
+    },
+    {
+        "id": 3,
+        "name": "Peach Jam",
+        "unit": "bottle",
+        "stock": 75
+    },
+    {
+        "id": 3,
+        "name": "Pearl",
+        "unit": "box",
+        "stock": 20
+    }
+]

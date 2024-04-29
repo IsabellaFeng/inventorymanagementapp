@@ -11,6 +11,7 @@
     "format": "prettier --write '*/**/*.{js,jsx,ts,tsx,json,css}'"
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.24.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.4",
     "@babel/preset-env": "^7.24.4",
+    "@types/react": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "babel-loader": "^9.1.3",
