@@ -68,9 +68,10 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {inventories.map((row) => (
+                            {inventories.map((row, index) => (
                                 <TableRow
                                     key={row.name}
+                                    className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     {Object.keys(row).map((key) =>

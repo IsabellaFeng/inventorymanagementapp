@@ -20,9 +20,9 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    'style-loader',
-                    'css-loader',
-                    'postcss-loader'
+                    'style-loader', // Injects CSS into the DOM via a <style> tag
+                    'css-loader',   // Interprets `@import` and `url()` like `import/require()` and will resolve them
+                    'postcss-loader' // Processes CSS with PostCSS
                 ]
             },
             {
@@ -34,11 +34,13 @@ module.exports = {
                         presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
                     }
                 }
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource'
             }
         ]
     },
-
-    // Resolve configurations
     resolve: {
         extensions: ['.js', '.jsx', '.json', '.tsx', '.wasm']
     },
