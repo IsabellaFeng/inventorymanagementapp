@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import inventoryData from '../data.json';
 import { Item } from '../Interface/InventoryTypes';
+import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 
 
@@ -34,6 +35,8 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
         "Last Updated"
     ]
 
+    const theme = useTheme();
+
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
         field: keyof Item
@@ -52,14 +55,14 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
     };
     return (
         <div className="container">
-            <div className="inventory-list">
-                <h2>Inventories</h2>
+            <div className="inventory-list ">
+                <div className='font-semibold my-2'>Inventories</div>
                 <TableContainer component={Paper}>
-                    <Table className='min-w-80' aria-label="simple table">
-                        <TableHead>
+                    <Table className='min-w-80'>
+                        <TableHead className='bg-primary' >
                             <TableRow>
                                 {columnNames.map((name) =>
-                                    <TableCell key={name}>{name}</TableCell>
+                                    <TableCell sx={{ fontWeight: 600 }} key={name}>{name}</TableCell>
                                 )}
 
                             </TableRow>
