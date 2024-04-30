@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import inventoryData from '../data.json';
 import { Item } from '../Interface/InventoryTypes';
 import PropTypes from 'prop-types';
+
 
 interface InventoryProps {
     title?: string;
@@ -13,7 +21,18 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
         name: '',
         unit: '',
         stock: 0,
+        unitPrice: 0,
+        lastUpdated: new Date().toDateString()
     });
+
+    const columnNames = [
+        "Id",
+        "Name",
+        "Unit",
+        "Stock",
+        "Unit Price",
+        "Last Updated"
+    ]
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -28,38 +47,37 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
                 ...inventories,
                 { ...newInventory, id: inventories.length + 1 },
             ]);
-            setNewInventory({ id: 0, name: '', unit: '', stock: 0 });
+            setNewInventory({ id: 0, name: '', unit: '', stock: 0, unitPrice: 0 });
         }
     };
     return (
         <div className="container">
             <div className="inventory-list">
                 <h2>Inventories</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Unit</th>
-                            <th>Stock</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {inventories.map((inventory) => (
-                            <tr key={inventory.id}>
-                                <td>{inventory.name}</td>
-                                <td>{inventory.unit}</td>
-                                <td>{inventory.stock}</td>
-                                <td>
-                                    <button>Edit</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                <button>Add Inventory</button>
-            </div>
-            <div className="add-inventory">
+                <TableContainer component={Paper}>
+                    <Table className='min-w-80' aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                {columnNames.map((name) =>
+                                    <TableCell key={name}>{name}</TableCell>
+                                )}
+
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {inventories.map((row) => (
+                                <TableRow
+                                    key={row.name}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    {Object.keys(row).map((key) =>
+                                        <TableCell key={key}>{row[key]}</TableCell>
+                                    )}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
                 <h2>Add New Inventory</h2>
                 <input
                     type="text"

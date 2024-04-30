@@ -3,4 +3,6 @@ export interface Item {
     name: string;
     unit: string;
     stock: number;
+    unitPrice: number;
+    lastUpdated?: string;
 }
