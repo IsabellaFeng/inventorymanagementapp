@@ -10,6 +10,7 @@ import inventoryData from '../data.json';
 import { Ingredients } from '../interface/InventoryTypes';
 import PropTypes from 'prop-types';
 import { fetchIngredients } from '../services/inventory/inventoryService';
+import AddIngredientForm from '../components/AddIngredientForm';
 
 
 interface InventoryProps {
@@ -37,9 +38,9 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
     ]
 
     useEffect(() => {
-        fetchIngredients().then(data => {
-            console.log(data);
-        })
+        // fetchIngredients().then(data => {
+        //     console.log(data);
+        // })
     }, [shopId]);
 
 
@@ -62,7 +63,10 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
     return (
         <div className="container">
             <div className="inventory-list ">
-                <div className='font-semibold my-2'>Inventory</div>
+                <div className='flex justify-between items-center my-2'>
+                    <div className='font-semibold' >Inventory</div>
+                    <AddIngredientForm />
+                </div>
                 <TableContainer component={Paper}>
                     <Table className='min-w-80'>
                         <TableHead className='bg-primary' >
@@ -88,26 +92,6 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {/* <h2>Add New Inventory</h2>
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={newInventory.name}
-                    onChange={(e) => handleInputChange(e, 'name')}
-                />
-                <input
-                    type="text"
-                    placeholder="Unit"
-                    value={newInventory.unit}
-                    onChange={(e) => handleInputChange(e, 'unit')}
-                />
-                <input
-                    type="number"
-                    placeholder="Stock"
-                    value={newInventory.stock}
-                    onChange={(e) => handleInputChange(e, 'stock')}
-                />
-                <button onClick={handleAddInventory}>Add</button> */}
             </div>
         </div>
     )
