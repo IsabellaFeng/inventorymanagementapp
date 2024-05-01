@@ -10,7 +10,10 @@ import inventoryData from '../data.json';
 import { CreateIngredientRequest, Ingredient } from '../interface/InventoryTypes';
 import PropTypes from 'prop-types';
 import { fetchIngredients } from '../services/inventory/inventoryService';
-import AddIngredientForm from '../components/AddIngredientForm';
+import UpdateIngredient from '../components/UpdateIngredient';
+import Button from '@mui/material/Button';
+import AddIngredient from '../components/AddIngredient';
+
 
 
 interface InventoryProps {
@@ -36,24 +39,22 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
     }, [shopId]);
 
 
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement>,
-        field: keyof Ingredient
+    const handleEditIngredient = (
+        formData: Ingredient
     ) => {
-        console.log('inputChange')
+        console.log(formData)
     };
 
     const handleAddIngredient = (formData: CreateIngredientRequest) => {
         const newIngredient = { ...formData, ingredientId: inventory.length }
         setInventory([...inventory, newIngredient]);
-
     };
     return (
         <div className="container">
             <div className="inventory-list">
                 <div className='flex justify-between items-center my-2'>
                     <div className='font-semibold' >Inventory</div>
-                    <AddIngredientForm handleAddIngredient={handleAddIngredient} />
+                    <AddIngredient handleAddIngredient={handleAddIngredient} />
                 </div>
                 <TableContainer component={Paper}>
                     <Table className='min-w-80'>
@@ -62,7 +63,7 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
                                 {Object.keys(columnNames).map((key) =>
                                     <TableCell sx={{ fontWeight: 600 }} key={key}>{columnNames[key]}</TableCell>
                                 )}
-
+                                <TableCell sx={{ fontWeight: 600 }}>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -75,6 +76,9 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
                                     {Object.keys(columnNames).map((key) =>
                                         <TableCell key={key}>{row[key as keyof Ingredient]}</TableCell>
                                     )}
+                                    <TableCell>
+                                        <UpdateIngredient handleEditIngredient={handleEditIngredient} ingredient={row}></UpdateIngredient>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

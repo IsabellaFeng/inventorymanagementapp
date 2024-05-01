@@ -7,4 +7,11 @@ export interface Ingredient {
     lastUpdatedAt?: string;
 }
 
+export interface IngredientForm {
+    name: string;
+    unit: string;
+    quantity: number;
+    unitPrice: number;
+}
+
 export type CreateIngredientRequest = Omit<Ingredient, 'ingredientId'>;
