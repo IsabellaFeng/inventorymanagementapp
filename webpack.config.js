@@ -26,7 +26,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(js|jsx|tsx)$/,
+                test: /\.(js|jsx|tsx|ts)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
@@ -42,6 +42,6 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '.tsx', '.wasm']
+        extensions: ['.js', '.jsx', '.json', '.tsx', '.wasm', '.ts']
     },
 };

@@ -1,34 +1,34 @@
 [
     {
-        "id": 1,
+        "ingredientId": 1,
         "name": "Strawberry Jam",
         "unit": "bottle",
-        "stock": 100,
+        "quantity": 100,
         "unitPrice": 23.1,
-        "lastUpdated": "01/05/2024"
+        "lastUpdatedAt": "01/05/2024"
     },
     {
-        "id": 2,
+        "ingredientId": 2,
         "name": "BrownSugar Syrup",
         "unit": "bottle",
-        "stock": 50,
+        "quantity": 50,
         "unitPrice": 11.5,
-        "lastUpdated": "01/05/2024"
+        "lastUpdatedAt": "01/05/2024"
     },
     {
-        "id": 3,
+        "ingredientId": 3,
         "name": "Peach Jam",
         "unit": "bottle",
-        "stock": 75,
+        "quantity": 75,
         "unitPrice": 30,
-        "lastUpdated": "01/05/2024"
+        "lastUpdatedAt": "01/05/2024"
     },
     {
-        "id": 3,
+        "ingredientId": 3,
         "name": "Pearl",
         "unit": "box",
-        "stock": 20,
+        "quantity": 20,
         "unitPrice": 59,
-        "lastUpdated": "01/05/2024"
+        "lastUpdatedAt": "01/05/2024"
     }
 ]

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,25 +7,26 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import inventoryData from '../data.json';
-import { Item } from '../Interface/InventoryTypes';
-import { useTheme } from '@mui/material/styles';
+import { Ingredients } from '../interface/InventoryTypes';
 import PropTypes from 'prop-types';
+import { fetchIngredients } from '../services/inventory/inventoryService';
 
 
 interface InventoryProps {
     title?: string;
+    shopId: number;
 }
 const InventoryView: React.FC<InventoryProps> = (props) => {
-    const [inventories, setInventories] = useState<Item[]>(inventoryData);
-    const [newInventory, setNewInventory] = useState<Item>({
-        id: 0,
+    const [inventories, setInventories] = useState<Ingredients[]>(inventoryData);
+    const [newInventory, setNewInventory] = useState<Ingredients>({
+        ingredientId: 0,
         name: '',
         unit: '',
-        stock: 0,
+        quantity: 0,
         unitPrice: 0,
-        lastUpdated: new Date().toDateString()
+        lastUpdatedAt: new Date().toDateString()
     });
-
+    const { title, shopId } = props;
     const columnNames = [
         "Id",
         "Name",
@@ -35,28 +36,33 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
         "Last Updated"
     ]
 
-    const theme = useTheme();
+    useEffect(() => {
+        fetchIngredients().then(data => {
+            console.log(data);
+        })
+    }, [shopId]);
+
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
-        field: keyof Item
+        field: keyof Ingredients
     ) => {
         setNewInventory({ ...newInventory, [field]: e.target.value });
     };
 
     const handleAddInventory = () => {
-        if (newInventory.name && newInventory.unit && newInventory.stock) {
+        if (newInventory.name && newInventory.unit && newInventory.quantity) {
             setInventories([
                 ...inventories,
-                { ...newInventory, id: inventories.length + 1 },
+                { ...newInventory, ingredientId: inventories.length + 1 },
             ]);
-            setNewInventory({ id: 0, name: '', unit: '', stock: 0, unitPrice: 0 });
+            setNewInventory({ ingredientId: 0, name: '', unit: '', quantity: 0, unitPrice: 0 });
         }
     };
     return (
         <div className="container">
             <div className="inventory-list ">
-                <div className='font-semibold my-2'>Inventories</div>
+                <div className='font-semibold my-2'>Inventory</div>
                 <TableContainer component={Paper}>
                     <Table className='min-w-80'>
                         <TableHead className='bg-primary' >
@@ -75,14 +81,14 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     {Object.keys(row).map((key) =>
-                                        <TableCell key={key}>{row[key]}</TableCell>
+                                        <TableCell key={key}>{row[key as keyof Ingredients]}</TableCell>
                                     )}
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <h2>Add New Inventory</h2>
+                {/* <h2>Add New Inventory</h2>
                 <input
                     type="text"
                     placeholder="Name"
@@ -101,7 +107,7 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
                     value={newInventory.stock}
                     onChange={(e) => handleInputChange(e, 'stock')}
                 />
-                <button onClick={handleAddInventory}>Add</button>
+                <button onClick={handleAddInventory}>Add</button> */}
             </div>
         </div>
     )

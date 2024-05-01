@@ -1,8 +1,10 @@
-export interface Item {
-    id: number;
+export interface Ingredients {
+    ingredientId: number;
     name: string;
     unit: string;
-    stock: number;
+    quantity: number;
     unitPrice: number;
-    lastUpdated?: string;
+    lastUpdatedAt?: string;
 }
+
+export type CreateIngredientRequest = Omit<Ingredients, 'ingredientId'>;
