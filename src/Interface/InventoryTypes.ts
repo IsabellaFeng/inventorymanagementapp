@@ -1,4 +1,4 @@
-export interface Ingredients {
+export interface Ingredient {
     ingredientId: number;
     name: string;
     unit: string;
@@ -7,4 +7,4 @@ export interface Ingredients {
     lastUpdatedAt?: string;
 }
 
-export type CreateIngredientRequest = Omit<Ingredients, 'ingredientId'>;
+export type CreateIngredientRequest = Omit<Ingredient, 'ingredientId'>;

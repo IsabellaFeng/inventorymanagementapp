@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import inventoryData from '../data.json';
-import { Ingredients } from '../interface/InventoryTypes';
+import { Ingredient } from '../interface/InventoryTypes';
 import PropTypes from 'prop-types';
 import { fetchIngredients } from '../services/inventory/inventoryService';
 import AddIngredientForm from '../components/AddIngredientForm';
@@ -18,24 +18,16 @@ interface InventoryProps {
     shopId: number;
 }
 const InventoryView: React.FC<InventoryProps> = (props) => {
-    const [inventories, setInventories] = useState<Ingredients[]>(inventoryData);
-    const [newInventory, setNewInventory] = useState<Ingredients>({
-        ingredientId: 0,
-        name: '',
-        unit: '',
-        quantity: 0,
-        unitPrice: 0,
-        lastUpdatedAt: new Date().toDateString()
-    });
+    const [inventory, setInventory] = useState<Ingredient[]>(inventoryData);
     const { title, shopId } = props;
-    const columnNames = [
-        "Id",
-        "Name",
-        "Unit",
-        "Stock",
-        "Unit Price",
-        "Last Updated"
-    ]
+    const columnNames = {
+        ingredientId: "Id",
+        name: "Name",
+        unit: "Unit",
+        quantity: "Stock",
+        unitPrice: "Unit Price",
+        lastUpdatedAt: "Last Updated"
+    }
 
     useEffect(() => {
         // fetchIngredients().then(data => {
@@ -46,46 +38,42 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
-        field: keyof Ingredients
+        field: keyof Ingredient
     ) => {
-        setNewInventory({ ...newInventory, [field]: e.target.value });
+        console.log('inputChange')
     };
 
-    const handleAddInventory = () => {
-        if (newInventory.name && newInventory.unit && newInventory.quantity) {
-            setInventories([
-                ...inventories,
-                { ...newInventory, ingredientId: inventories.length + 1 },
-            ]);
-            setNewInventory({ ingredientId: 0, name: '', unit: '', quantity: 0, unitPrice: 0 });
-        }
+    const handleAddIngredient = (formData: Ingredient) => {
+        const newIngredient = { ...formData, ingredientId: inventory.length }
+        setInventory([...inventory, newIngredient]);
+
     };
     return (
         <div className="container">
             <div className="inventory-list ">
                 <div className='flex justify-between items-center my-2'>
                     <div className='font-semibold' >Inventory</div>
-                    <AddIngredientForm />
+                    <AddIngredientForm handleAddIngredient={handleAddIngredient} />
                 </div>
                 <TableContainer component={Paper}>
                     <Table className='min-w-80'>
                         <TableHead className='bg-primary' >
                             <TableRow>
-                                {columnNames.map((name) =>
-                                    <TableCell sx={{ fontWeight: 600 }} key={name}>{name}</TableCell>
+                                {Object.keys(columnNames).map((key) =>
+                                    <TableCell sx={{ fontWeight: 600 }} key={key}>{columnNames[key]}</TableCell>
                                 )}
 
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {inventories.map((row, index) => (
+                            {inventory.map((row, index) => (
                                 <TableRow
                                     key={row.name}
                                     className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    {Object.keys(row).map((key) =>
-                                        <TableCell key={key}>{row[key as keyof Ingredients]}</TableCell>
+                                    {Object.keys(columnNames).map((key) =>
+                                        <TableCell key={key}>{row[key as keyof Ingredient]}</TableCell>
                                     )}
                                 </TableRow>
                             ))}

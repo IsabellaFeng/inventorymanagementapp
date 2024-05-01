@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 
-const AddIngredientForm = () => {
+const AddIngredientForm = (props) => {
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -14,6 +14,7 @@ const AddIngredientForm = () => {
         quantity: 0,
         unitPrice: 0
     });
+    const { handleAddIngredient } = props;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -24,7 +25,8 @@ const AddIngredientForm = () => {
     };
 
     const handleConfirm = () => {
-        console.log(formData);
+        const newFormData = { ...formData, lastUpdatedAt: new Date().toLocaleDateString() }
+        handleAddIngredient(newFormData);
         setOpen(false);
     };
 
