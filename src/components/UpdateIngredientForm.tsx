@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -19,6 +19,10 @@ interface UpdateIngredientFormProps {
 const UpdateIngredientForm: React.FC<UpdateIngredientFormProps> = (props) => {
     const { open, ingredientData, title, handleClose, handleUpdateIngredient } = props;
     const [formData, setFormData] = useState<IngredientForm>(ingredientData);
+
+    useEffect(() => {
+        setFormData(ingredientData);
+    }, [ingredientData]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value;

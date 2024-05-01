@@ -16,8 +16,10 @@ const initialFormData: IngredientForm = {
 
 const AddIngredient: React.FC<AddIngredientFormProps> = ({ handleAddIngredient }) => {
     const [open, setOpen] = useState<boolean>(false);
+    const [formData, setFormData] = useState<IngredientForm>(initialFormData);
 
     const handleClickOpen = () => {
+        setFormData({ ...initialFormData });
         setOpen(true);
     };
 
@@ -28,7 +30,7 @@ const AddIngredient: React.FC<AddIngredientFormProps> = ({ handleAddIngredient }
     const handleUpdateIngredient = (formData: IngredientForm) => {
         const newFormData = { ...formData, lastUpdatedAt: new Date().toLocaleDateString() };
         handleAddIngredient(newFormData);
-        setOpen(false);
+        handleClose();
     };
 
     return (
@@ -36,7 +38,7 @@ const AddIngredient: React.FC<AddIngredientFormProps> = ({ handleAddIngredient }
             <Button variant="outlined" onClick={handleClickOpen}>
                 Add New
             </Button>
-            <UpdateIngredientForm open={open} title='Add new Ingredient' ingredientData={initialFormData} handleClose={handleClose} handleUpdateIngredient={handleUpdateIngredient}></UpdateIngredientForm>
+            <UpdateIngredientForm open={open} title='Add new Ingredient' ingredientData={formData} handleClose={handleClose} handleUpdateIngredient={handleUpdateIngredient}></UpdateIngredientForm>
 
         </div>
     );
