@@ -5,8 +5,8 @@ import logo from '../assets/logo001.png';
 function HomePage() {
 
   return (
-    <div>
-      <div className="flex items-center">
+    <div className='m-8'>
+      <div className="flex items-center my-4">
         <img src={logo} className="mr-4 h-8 w-8 rounded-full" />
         <h1 className="text-3xl font-bold underline">Inventory management - City of Tea Silverdale</h1>
       </div>

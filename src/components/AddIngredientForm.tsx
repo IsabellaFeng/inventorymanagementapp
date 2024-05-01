@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,15 +6,28 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 
-const AddIngredientForm = (props) => {
-    const [open, setOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        unit: '',
-        quantity: 0,
-        unitPrice: 0
-    });
-    const { handleAddIngredient } = props;
+
+interface IngredientForm {
+    name: string;
+    unit: string;
+    quantity: number;
+    unitPrice: number;
+}
+
+interface AddIngredientFormProps {
+    handleAddIngredient: (ingredient: IngredientForm & { lastUpdatedAt: string }) => void;
+}
+
+const initialFormData: IngredientForm = {
+    name: '',
+    unit: '',
+    quantity: 0,
+    unitPrice: 0
+};
+
+const AddIngredientForm: React.FC<AddIngredientFormProps> = ({ handleAddIngredient }) => {
+    const [open, setOpen] = useState<boolean>(false);
+    const [formData, setFormData] = useState<IngredientForm>(initialFormData);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -25,19 +38,21 @@ const AddIngredientForm = (props) => {
     };
 
     const handleConfirm = () => {
-        const newFormData = { ...formData, lastUpdatedAt: new Date().toLocaleDateString() }
+        const newFormData = { ...formData, lastUpdatedAt: new Date().toLocaleDateString() };
         handleAddIngredient(newFormData);
+        setFormData(initialFormData);
         setOpen(false);
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.type === 'number' ? parseFloat(e.target.value) : e.target.value
+            [e.target.name]: value
         });
     };
 
-    const isValidaForm = () => {
+    const isValidForm = () => {
         return formData.name.trim() !== '' && formData.unit.trim() !== '';
     };
 
@@ -46,7 +61,7 @@ const AddIngredientForm = (props) => {
             <Button variant="outlined" onClick={handleClickOpen}>
                 Add New
             </Button>
-            <Dialog open={open}>
+            <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Add new Ingredient</DialogTitle>
                 <DialogContent>
                     <TextField
@@ -101,7 +116,7 @@ const AddIngredientForm = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button disabled={!isValidaForm()} onClick={handleConfirm}>Confirm</Button>
+                    <Button disabled={!isValidForm()} onClick={handleConfirm}>Confirm</Button>
                 </DialogActions>
             </Dialog>
         </div>

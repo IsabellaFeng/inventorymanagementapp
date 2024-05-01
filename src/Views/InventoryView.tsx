@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import inventoryData from '../data.json';
-import { Ingredient } from '../interface/InventoryTypes';
+import { CreateIngredientRequest, Ingredient } from '../interface/InventoryTypes';
 import PropTypes from 'prop-types';
 import { fetchIngredients } from '../services/inventory/inventoryService';
 import AddIngredientForm from '../components/AddIngredientForm';
@@ -43,14 +43,14 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
         console.log('inputChange')
     };
 
-    const handleAddIngredient = (formData: Ingredient) => {
+    const handleAddIngredient = (formData: CreateIngredientRequest) => {
         const newIngredient = { ...formData, ingredientId: inventory.length }
         setInventory([...inventory, newIngredient]);
 
     };
     return (
         <div className="container">
-            <div className="inventory-list ">
+            <div className="inventory-list">
                 <div className='flex justify-between items-center my-2'>
                     <div className='font-semibold' >Inventory</div>
                     <AddIngredientForm handleAddIngredient={handleAddIngredient} />
