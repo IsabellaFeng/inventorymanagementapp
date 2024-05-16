@@ -61,7 +61,7 @@ const InventoryView: React.FC<InventoryProps> = (props) => {
                         <TableHead className='bg-primary' >
                             <TableRow>
                                 {Object.keys(columnNames).map((key) =>
-                                    <TableCell sx={{ fontWeight: 600 }} key={key}>{columnNames[key]}</TableCell>
+                                    <TableCell sx={{ fontWeight: 600 }} key={key}>{columnNames[key as keyof object]}</TableCell>
                                 )}
                                 <TableCell sx={{ fontWeight: 600 }}>Actions</TableCell>
                             </TableRow>
