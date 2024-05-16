@@ -13,9 +13,9 @@ describe('inventory API functions', () => {
 
     describe('fetchIngredients', () => {
         it('fetches ingredients successfully', async () => {
-            const mockIngredients = [
-                { id: 1, name: 'Sugar', unit: 'kg', quantity: 10, unitPrice: 5 },
-            ];
+            const mockIngredients =
+                { id: 1, name: 'Sugar', unit: 'kg', quantity: 10, unitPrice: 5 }
+                ;
 
             (axiosInstance.get as jest.Mock).mockResolvedValue({
                 data: mockIngredients,
